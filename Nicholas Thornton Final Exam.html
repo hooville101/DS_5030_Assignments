@@ -7607,14 +7607,81 @@ $$</p>
 <p>$$
 P(\text{U}) = 1 - 0.60 = 0.40
 $$</p>
-<p>For any event $A \subseteq \Omega$, its probability is the sum of its outcomes' probabilities. For example,</p>
+<p>Using these, the probabilities of each event in $\mathcal{F}$ are:</p>
 <p>$$
-P(\{\text{FT},\text{NFT}\}) = P(\text{FT}) + P(\text{NFT}) = 0.42 + 0.18 = 0.60
+P(\emptyset)=0
 $$</p>
-<p>and</p>
 <p>$$
-P(\emptyset)=0,\quad P(\Omega)=1.
+P(\{\text{FT}\})=0.42,\quad
+P(\{\text{NFT}\})=0.18,\quad
+P(\{\text{U}\})=0.40
 $$</p>
+<p>$$
+P(\{\text{FT},\text{NFT}\})=0.42+0.18=0.60
+$$</p>
+<p>$$
+P(\{\text{FT},\text{U}\})=0.42+0.40=0.82
+$$</p>
+<p>$$
+P(\{\text{NFT},\text{U}\})=0.18+0.40=0.58
+$$</p>
+<p>$$
+P(\Omega)=1
+$$</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a3c81774">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">p_employed</span> <span class="o">=</span> <span class="mf">0.60</span>
+<span class="n">p_ft_given_employed</span> <span class="o">=</span> <span class="mf">0.70</span>
+<span class="n">p_nft_given_employed</span> <span class="o">=</span> <span class="mf">0.30</span>
+
+<span class="n">p_ft</span> <span class="o">=</span> <span class="n">p_employed</span> <span class="o">*</span> <span class="n">p_ft_given_employed</span>
+<span class="n">p_nft</span> <span class="o">=</span> <span class="n">p_employed</span> <span class="o">*</span> <span class="n">p_nft_given_employed</span>
+<span class="n">p_u</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">p_employed</span>
+
+<span class="n">event_probs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"empty"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">"</span><span class="si">{FT}</span><span class="s2">"</span><span class="p">:</span> <span class="n">p_ft</span><span class="p">,</span>
+    <span class="s2">"</span><span class="si">{NFT}</span><span class="s2">"</span><span class="p">:</span> <span class="n">p_nft</span><span class="p">,</span>
+    <span class="s2">"</span><span class="si">{U}</span><span class="s2">"</span><span class="p">:</span> <span class="n">p_u</span><span class="p">,</span>
+    <span class="s2">"{FT,NFT}"</span><span class="p">:</span> <span class="n">p_ft</span> <span class="o">+</span> <span class="n">p_nft</span><span class="p">,</span>
+    <span class="s2">"{FT,U}"</span><span class="p">:</span> <span class="n">p_ft</span> <span class="o">+</span> <span class="n">p_u</span><span class="p">,</span>
+    <span class="s2">"{NFT,U}"</span><span class="p">:</span> <span class="n">p_nft</span> <span class="o">+</span> <span class="n">p_u</span><span class="p">,</span>
+    <span class="s2">"Omega"</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">event_probs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>empty: 0.00
+{FT}: 0.42
+{NFT}: 0.18
+{U}: 0.40
+{FT,NFT}: 0.60
+{FT,U}: 0.82
+{NFT,U}: 0.58
+Omega: 1.00
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -7931,7 +7998,10 @@ f(x)=
 $$</p>
 <p>Then</p>
 <p>$$
-\mathbb{E}[X] = \int_{-\infty}^{\infty} x f(x)\,dx = \int_a^b x\frac{1}{b-a}\,dx
+\mathbb{E}[X]
+= \int_{-\infty}^{\infty} x f(x)\,dx
+= \int_a^b x\left(\frac{1}{b-a}\right)\,dx
+= \frac{1}{b-a}\int_a^b x\,dx
 = \frac{1}{b-a}\left[\frac{x^2}{2}\right]_a^b
 = \frac{1}{b-a}\cdot\frac{b^2-a^2}{2}
 = \frac{a+b}{2}.
